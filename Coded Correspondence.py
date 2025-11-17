@@ -74,10 +74,77 @@ messaggio_6 = "txm srom vkda gl lzlgzr qpdb? fepb ejac! ubr imn tapludwy mhfbz c
 #Parola chiave per decriptare il messaggio
 keyword = "friends"
 
-def lettura_chiper(messaggio_6, keyword):
-  contatore = 0
-  for m in messaggio_6:
-    if m in alfabeto:
-      contatore += 1
-  chiave_estesa = (keyword * 10)[:contatore]
-  for k in 
+#funzione per decifrare messaggio criptato con il Vigenère Ciphere
+def decifra_vigenere(messaggio, keyword):
+    risultato = ""
+    indice_chiave = 0
+    #trasformo le lettere in minuscolo
+    keyword = keyword.lower()
+  #scorre ogni carattere del messaggio
+    for char in messaggio:
+        #controlla se il carattere è una lettera (ignora spazi e punteggiatura)
+        if char.isalpha():
+            #converte la lettera in minuscolo per lavorare sempre con l'alfabeto in minuscolo
+            minuscola = char.lower()
+            #prende la lettera giusta dalla parola chiave, ripetendola se serve (grazie al modulo %)
+            lettera_chiave = keyword[indice_chiave % len(keyword)]
+            #creo una variabile dove trova la lettera "minuscola all'interno dell'alfabeto"
+            pos_messaggio = alfabeto.index(minuscola)
+            #creo una variabile dove trova la lettera chiave all'interno dell'alfabeto
+            pos_chiave = alfabeto.index(lettera_chiave)
+            #calcola la posizione della lettera cofirata (per codificare)
+            nuova_pos = (pos_messaggio + pos_chiave) % 26
+            #prende la lettera cifrata dall'alfabeto
+            nuova_lettera = alfabeto[nuova_pos]
+            #se la lettera originale era maiuscola, la trasforma in maiuscolo anche nel risultato
+            if char.isupper():
+                nuova_lettera = nuova_lettera.upper()
+            #aggiunge la lettera cifrata al risultato
+            risultato += nuova_lettera
+            #passa alla lettera successiva della chiave
+            indice_chiave += 1
+        else:
+            #se il carattere non è una lettera, lo aggiunge così com'è
+            risultato += char
+    return risultato
+
+print(decifra_vigenere(messaggio_6, keyword))
+
+#messaggio da cifrare con sistema cifratura Vigenere
+messaggio_7 = "Forza Juventus"
+#keyword per cifrare/decifrare il messaggio
+keyword_2 = "Dybala"
+
+def cifrato_vigenere(messaggio_7, keyword_2):
+    risultato = ""
+    indice_chiave = 0
+    #trasformo le lettere in minuscolo
+    keyword_2 = keyword_2.lower()
+  #scorre ogni carattere del messaggio
+    for m in messaggio_7:
+        #controlla se il carattere è una lettera (ignora spazi e punteggiatura)
+        if m.isalpha():
+            #converte la lettera in minuscolo per lavorare sempre con l'alfabeto in minuscolo
+            minuscola = m.lower()
+            #prende la lettera giusta dalla parola chiave, ripetendola se serve (grazie al modulo %)
+            lettera_chiave = keyword_2[indice_chiave % len(keyword_2)]
+            #creo una variabile dove trova la lettera "minuscola all'interno dell'alfabeto"
+            pos_messaggio = alfabeto.index(minuscola)
+            #creo una variabile dove trova la lettera chiave all'interno dell'alfabeto
+            pos_chiave = alfabeto.index(lettera_chiave)
+            #calcola la posizione della lettera cofirata (per codificare)
+            nuova_pos = (pos_messaggio - pos_chiave) % 26
+            #prende la lettera cifrata dall'alfabeto
+            nuova_lettera = alfabeto[nuova_pos]
+            #se la lettera originale era maiuscola, la trasforma in maiuscolo anche nel risultato
+            if m.isupper():
+                nuova_lettera = nuova_lettera.upper()
+            #aggiunge la lettera cifrata al risultato
+            risultato += nuova_lettera
+            #passa alla lettera successiva della chiave
+            indice_chiave += 1
+        else:
+            #se il carattere non è una lettera, lo aggiunge così com'è
+            risultato += m
+    return risultato
+print(cifrato_vigenere(messaggio_7, keyword_2))
