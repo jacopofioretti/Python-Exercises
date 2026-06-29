@@ -1,3 +1,5 @@
+#Esercizio per cifrare e decifrare testi codificati
+
 #Scrivo un dizionario contenente l'alfabeto
 alfabeto = "abcdefghijklmnopqrstuvwxyz"
 
